@@ -11,6 +11,8 @@ duckdb = { version = "=1.10502.0" }
 # release but it was in my case because the Debian/Linux release provided by
 # the DuckDB project did not include a .pc file and pkg-config couldn't find
 # duckdb.h and libduckdb.so, even though they were in the appropriate directory.
+# Also note that this path will need to be adjusted for use on other platforms,
+# like ARM or Mac.
 [env]
 DUCKDB_DOWNLOAD_LIB = "1"
 
