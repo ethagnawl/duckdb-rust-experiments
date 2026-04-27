@@ -1,0 +1,27 @@
+[package]
+name = "duck-db"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+duckdb = { version = "=1.10502.0" }
+
+# Force download and explicitly reference its path
+# This is *probably* not necessary if you haven't installed a standalone DuckDB
+# release but it was in my case because the Debian/Linux release provided by
+# the DuckDB project did not include a .pc file and pkg-config couldn't find
+# duckdb.h and libduckdb.so, even though they were in the appropriate directory.
+[env]
+DUCKDB_DOWNLOAD_LIB = "1"
+
+[build]
+rustflags = [
+    "-C", "link-arg=-Wl,-rpath,$ORIGIN/../duckdb-download/x86_64-unknown-linux-gnu/1.5.2",
+]
+
+# Instruct the build linker where to look for libduck.so and duckdb.h
+# This probably isn't required for most users and could be worked around by
+# manually creating a .pc file which pkg-config would use do find these paths.
+# [env]
+# DUCKDB_LIB_DIR = "/usr/local/lib"
+# DUCKDB_INCLUDE_DIR = "/usr/local/include"
